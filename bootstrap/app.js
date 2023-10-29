@@ -1,13 +1,23 @@
 /// <reference path="./../typings/globals/jquery/index.d.ts" />
 
 console.log('haha');
+
+let switchState = true;
+
 $(document).ready(function () {
   console.log('doc ready');
-  $('div').mouseenter(function () {
-    console.log('mouse enter');
-  });
-  $('div').mouseleave(function () {
-    console.log('mouse leave');
+
+  $('#switch').click(function (e) {
+    e.preventDefault();
+    let contentDIV = document.getElementById('d1');
+    if (switchState) {
+      contentDIV.innerText = 'turn off';
+      // contentDIV.textContent = 'turn off';
+    } else {
+      contentDIV.innerText = 'turn on';
+      // contentDIV.textContent = 'turn on';
+    }
+    switchState = !switchState;
   });
 
   //   $('#t').click(function (e) {
