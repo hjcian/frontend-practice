@@ -1,22 +1,25 @@
 import ReactDOM from 'react-dom';
 import { useState, useEffect } from 'react';
 
-const Demo = ({ portal }) => {
-  console.log('start');
+const Demo = ({ incoming, outgoing }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    portal.subscribe(data => {
+    incoming.subscribe(data => {
       setCount(count + 1);
     });
   });
 
-  console.log('render:', count);
+  const handleClick = () => {
+    setCount(count + 1);
+    outgoing.publish(count + 1);
+  };
+
   return (
     <div>
       <hr></hr>
       <h1>This is React component</h1>
       <div class='card'>
-        <button id='counter' type='button' onClick={() => setCount(count + 1)}>
+        <button id='counter' type='button' onClick={handleClick}>
           Click me
         </button>
         <p>You clicked {count} times</p>
@@ -24,9 +27,5 @@ const Demo = ({ portal }) => {
     </div>
   );
 };
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// const element = <h1>Hello, world</h1>;
-// root.render(<Demo />);
 
 export default Demo;

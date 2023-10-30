@@ -4,14 +4,15 @@ import ReactDOM from 'react-dom';
 import { createVisNetwork } from './vis.js';
 import { createSimpleDataPasser } from './pubsub.js';
 
-const passer = createSimpleDataPasser();
+const jsToReactPasser = createSimpleDataPasser();
+const reactToJSPasser = createSimpleDataPasser();
 
 $(document).ready(function () {
   console.log('doc ready');
-  init(passer);
+  init(jsToReactPasser, reactToJSPasser);
 });
 
-ReactDOM.render(<Demo portal={passer} />, document.getElementById('root'));
+ReactDOM.render(<Demo incoming={jsToReactPasser} outgoing={reactToJSPasser} />, document.getElementById('root'));
 // createVisNetwork();
 
 

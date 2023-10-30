@@ -1,4 +1,4 @@
-export function setupCounter(element, portal) {
+export function setupCounter(element, outgoing, incoming) {
   let counter = 0;
   const setCounter = count => {
     counter = count;
@@ -6,14 +6,18 @@ export function setupCounter(element, portal) {
   };
   setCounter(0);
 
+  incoming.subscribe(count => {
+    setCounter(count);
+  });
+
   element.addEventListener('click', () => {
-    const netCount = 1 + counter;
-    setCounter(netCount);
-    portal.publish(netCount);
+    const newCount = 1 + counter;
+    setCounter(newCount);
+    outgoing.publish(newCount);
   });
 }
 
-export const init = portal => {
+export const init = (outgoing, incoming) => {
   document.querySelector('#app').innerHTML = `
     <div>
       <h1>This is native JS component</h1>
@@ -25,5 +29,5 @@ export const init = portal => {
   // $(document).ready(function () {
   //   console.log('doc ready');
   // });
-  setupCounter(document.querySelector('#native-counter'), portal);
+  setupCounter(document.querySelector('#native-counter'), outgoing, incoming);
 };
