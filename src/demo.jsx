@@ -1,9 +1,16 @@
 import ReactDOM from 'react-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const Demo = () => {
+const Demo = ({ portal }) => {
+  console.log('start');
   const [count, setCount] = useState(0);
+  useEffect(() => {
+    portal.subscribe(data => {
+      setCount(count + 1);
+    });
+  });
 
+  console.log('render:', count);
   return (
     <div>
       <hr></hr>
